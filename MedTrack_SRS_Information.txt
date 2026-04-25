@@ -1,0 +1,110 @@
+SOFTWARE REQUIREMENT SPECIFICATION (SRS) ON MEDTRACK – PHARMACEUTICAL INVENTORY AND EXPIRY MONITORING SYSTEM
+1.0 PROBLEM DEFINITION
+Pharmacy stores usually maintain a large number of medicines with different batch numbers, manufacturing dates, and expiry dates. In small and medium pharmacies, expiry checking and stock management are often done manually. This process is time-consuming and prone to human error.
+Due to manual management:
+Expired medicines may remain unnoticed.
+Expired medicines might accidentally be sold to customers.
+Pharmacy owners may suffer financial loss due to unsold expired stock.
+
+The MedTrack system solves these problems by providing a digital inventory system with automated expiry monitoring and barcode-based billing. It is a software application developed to assist pharmacy shopkeepers in managing medicine inventory efficiently and monitoring expiry dates of medicines.
+
+Main features of the system include:
+The system stores and manages medicine information such as medicine name, batch number, manufacturing date, expiry date, quantity, barcode, and price.
+The user can search medicines in the inventory using medicine name or barcode scanning.
+The system automatically monitors expiry dates and categorises medicines as:
+Expired
+Expiring Soon
+Safe
+The system integrates a Point of Sale (POS) billing system using barcode scanning.
+When a medicine is sold, the barcode is scanned, the bill is generated, and the inventory stock is automatically updated.
+The system generates alerts for medicines nearing expiry to help pharmacy owners avoid losses.
+2.0 SYSTEM REQUIREMENT SPECIFICATION
+2.1 INTRODUCTION
+2.1.1 Purpose The purpose of this Software Requirement Specification (SRS) document is to describe the functional and non-functional requirements for the development of the MedTrack Pharmaceutical Inventory and Expiry Monitoring System.
+This document serves as a guideline for developers, testers, and stakeholders to understand the system's design and functionality.
+2.1.2 Scope The product titled “MedTrack – Pharmaceutical Inventory and Expiry Monitoring System” is designed to help pharmacy shopkeepers manage medicine inventory and track expiry dates efficiently.
+The system performs the following tasks: • Maintain digital records of medicines. • Monitor expiry dates automatically. • Generate bills using barcode scanning. • Update stock quantities after sales. • Provide alerts for medicines nearing expiry.
+2.1.3 Definitions, Acronyms and Abbreviations DBMS – Database Management System POS – Point of Sale GUI – Graphical User Interface
+SRS – Software Requirement Specification
+2.1.4 References • IEEE Standard 830-1998 for Software Requirement Specifications • Ian Somerville, Software Engineering,10th Edition • Roger S. Pressman, Software Engineering: A Practitioner’s Approach
+2.1.5 Overview This SRS document describes the system requirements, system functionality, database structures, data flow diagrams, entity relationship diagrams, and testing requirements for the MedTrack system.
+2.2 OVERALL DESCRIPTION
+2.2.1 Product Perspective MedTrack is a desktop-based application designed for pharmacy shops to manage medicine inventory and monitor expiry dates. The system integrates inventory management with barcode-based for billing and expiring monitoring.
+2.2.2 Hardware Interfaces • Computer or Laptop • Minimum 4 GB RAM • USB Barcode Scanner • Printer for bill printing • Keyboard and Mouse
+2.2.3 Software Interfaces • Programming Language: Python • Database: MySQL • Development Environment: Visual Studio Code • Operating System: Windows
+2.2.4 Operations The software provides the following operations: • User login and authentication • Medicine inventory management • Barcode-based POS billing • Automatic stock updates • Expiry monitoring and alerts
+2.2.5 User Characteristics The intended users are pharmacy shopkeepers or pharmacy staff members. The system is designed to be user-friendly and easy to operate, requiring only basic computer knowledge.
+2.2.6 Constraints • The system requires a barcode scanner and printer. • The system is designed primarily for Windows operating systems. • Users must remember their login credentials.
+2.3 FUNCTIONAL REQUIREMENTS
+The system shall perform the following functions:
+User authentication through login credentials.
+Add, update, and manage medicine inventory records.
+Scan medicine barcodes for billing.
+Generate customer bills.
+Automatically update stock after sales.
+Monitor expiry dates of medicines.
+Display alerts for medicines nearing expiry.
+Generate inventory reports.
+2.4 NON-FUNCTIONAL REQUIREMENTS
+Performance The system should process billing and inventory operations quickly.
+Usability The system interface should be simple and easy to operate.
+Security Only authenticated users should be able to access the system.
+Hardware Requirements • Computer or laptop with minimum 4 GB RAM • USB barcode scanner • Printer for bill printing
+2.5 USE CASE (MAIN INTERACTIONS)
+Actor: Pharmacy Shopkeeper
+Main interactions with the system: • Login to the system • Add and manage medicine records • Scan barcode to sell medicines • Generate billing receipt • View expiry alerts • View inventory reports
+2.6 FRONT-END DESCRIPTION
+The front-end of the MedTrack system provides a Graphical User Interface (GUI) for the pharmacy shopkeeper.
+Users can perform the following operations:
+Login using username and password
+Add and manage medicine records
+Scan barcodes during billing
+Generate bills for customers
+View expiry alerts
+View inventory reports
+The interface includes the following screens:
+Login Form
+Dashboard / Main Menu
+Medicine Entry Form
+Inventory Management Screen
+Billing Screen
+Expiry Alert Screen
+Reports Screen
+2.7 BACK-END DESCRIPTION 
+The backend of the system manages database storage and system logic.
+The backend is implemented using Python with MySQL database.
+Responsibilities of the backend include:
+Storing medicine records in the database
+Processing barcode input
+Retrieving medicine details
+Updating inventory after sales
+Monitoring expiry dates
+Generating inventory reports
+
+2.8 DATA STRUCTURES
+The system database will store medicine information and transaction records.
+MEDICINE TABLE
+
+ 
+
+SALES TABLE
+
+2.9 DFD Diagram
+Level 0
+ Level 1
+Level 2
+2.9 ER Diagram
+ 
+3.0 TESTING
+FORM NAME – INPUT – EXPECTED OUTPUT
+Login Form – Username & Password – User authenticated
+Medicine Entry – Medicine details – Medicine stored in database
+Billing Form – Barcode scan – Bill generated and stock updated
+Expiry Alert – Expiry check – Expiring medicines displayed
+Report Module – Inventory data –Inventory report generated
+4.0 SAMPLE FORMS
+The system interface will contain the following screens: • Login Form • Dashboard • Medicine Entry Form • Inventory Management Screen • Billing Form • Expiry Alert Screen • Reports Form
+5.0 RESULT
+The MedTrack Pharmaceutical Inventory and Expiry Monitoring System provides an efficient solution for managing pharmacy inventory.
+The system integrates expiry monitoring with barcode-based billing to ensure accurate stock management and prevent losses due to expired medicines.
+The system improves efficiency, reduces human error, and ensures safe medicine management in pharmacy stores.

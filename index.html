@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MedTrack</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <main id="loginView" class="login-view">
+    <section class="login-panel" aria-labelledby="loginTitle">
+      <div class="brand-lockup">
+        <div class="brand-mark" aria-hidden="true">
+          <span>M</span>
+          <i></i>
+        </div>
+        <div>
+          <h1 id="loginTitle">MedTrack</h1>
+          <p>Pharmaceutical inventory and expiry monitoring</p>
+        </div>
+      </div>
+      <form id="loginForm" class="login-form">
+        <label>
+          Username
+          <input id="username" autocomplete="username" required>
+        </label>
+        <label>
+          Password
+          <div class="password-field">
+            <input id="password" type="password" autocomplete="current-password" required>
+            <button class="password-toggle" type="button" data-password-toggle="password" aria-label="Show password" aria-pressed="false">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M1.5 12s3.8-6.5 10.5-6.5S22.5 12 22.5 12s-3.8 6.5-10.5 6.5S1.5 12 1.5 12Z" />
+                <circle cx="12" cy="12" r="3.5" />
+              </svg>
+            </button>
+          </div>
+        </label>
+        <p id="loginError" class="form-error" role="alert"></p>
+        <button class="primary-btn" type="submit">Log in</button>
+        <div class="auth-links">
+          <button id="showCreateAccountBtn" class="text-btn auth-link-btn" type="button">Create account</button>
+        </div>
+        <p class="demo-note">Default access: admin / Admin@123</p>
+      </form>
+    </section>
+  </main>
+
+  <main id="createAccountView" class="login-view" hidden>
+    <section class="login-panel" aria-labelledby="createAccountTitle">
+      <div class="panel-head auth-panel-head">
+        <div>
+          <p class="eyebrow">Account setup</p>
+          <h2 id="createAccountTitle">Create account</h2>
+        </div>
+        <button id="backToLoginBtn" class="ghost-btn" type="button">Back</button>
+      </div>
+      <form id="createAccountForm" class="login-form">
+        <label>
+          Full name
+          <input id="registerName" autocomplete="name" required>
+        </label>
+        <label>
+          Username
+          <input id="registerUsername" autocomplete="username" required>
+        </label>
+        <label>
+          Password
+          <div class="password-field">
+            <input id="registerPassword" type="password" autocomplete="new-password" required>
+            <button class="password-toggle" type="button" data-password-toggle="registerPassword" aria-label="Show password" aria-pressed="false">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M1.5 12s3.8-6.5 10.5-6.5S22.5 12 22.5 12s-3.8 6.5-10.5 6.5S1.5 12 1.5 12Z" />
+                <circle cx="12" cy="12" r="3.5" />
+              </svg>
+            </button>
+          </div>
+        </label>
+        <label>
+          Confirm password
+          <div class="password-field">
+            <input id="registerConfirmPassword" type="password" autocomplete="new-password" required>
+            <button class="password-toggle" type="button" data-password-toggle="registerConfirmPassword" aria-label="Show password" aria-pressed="false">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M1.5 12s3.8-6.5 10.5-6.5S22.5 12 22.5 12s-3.8 6.5-10.5 6.5S1.5 12 1.5 12Z" />
+                <circle cx="12" cy="12" r="3.5" />
+              </svg>
+            </button>
+          </div>
+        </label>
+        <p class="helper-text">Password must be at least 8 characters and include a special character.</p>
+        <p id="createAccountMessage" class="form-message" role="status"></p>
+        <button class="primary-btn" type="submit">Create account</button>
+      </form>
+    </section>
+  </main>
+
+  <div id="appView" class="app-view" hidden>
+    <aside class="sidebar">
+      <div class="brand-lockup sidebar-brand">
+        <div class="brand-mark compact" aria-hidden="true">
+          <span>M</span>
+          <i></i>
+        </div>
+        <div>
+          <strong>MedTrack</strong>
+          <small>Inventory POS</small>
+        </div>
+      </div>
+      <nav class="nav-list" aria-label="Primary">
+        <button class="nav-link active" data-view="dashboardView">Dashboard</button>
+        <button class="nav-link" data-view="medicineView">Medicines</button>
+        <button class="nav-link" data-view="billingView">Billing</button>
+        <button class="nav-link" data-view="alertsView">Expiry Alerts</button>
+        <button class="nav-link" data-view="reportsView">Reports</button>
+        <button class="nav-link" data-view="accountView">Account</button>
+      </nav>
+      <button id="logoutBtn" class="ghost-btn sidebar-logout" type="button">Log out</button>
+    </aside>
+
+    <div class="workspace">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Pharmacy workspace</p>
+          <h2 id="pageTitle">Dashboard</h2>
+        </div>
+        <div class="top-actions">
+          <div class="user-chip">
+            <span>Signed in as</span>
+            <strong id="currentUserName">-</strong>
+          </div>
+          <label class="search-box">
+            <span>Search</span>
+            <input id="globalSearch" placeholder="Name or barcode">
+          </label>
+          <button id="printReceiptBtn" class="icon-btn" type="button" title="Print last receipt"
+            aria-label="Print last receipt">P</button>
+        </div>
+      </header>
+
+      <section id="dashboardView" class="view active-view">
+        <section class="panel welcome-panel">
+          <p class="eyebrow">Welcome back</p>
+          <h3 id="dashboardUserName">User</h3>
+          <p class="helper-text">You are signed in to MedTrack and can manage inventory, billing, reports, and account settings from here.</p>
+        </section>
+
+        <div class="metric-grid">
+          <article class="metric-card stock-card">
+            <span>Total medicines</span>
+            <strong id="totalMedicines">0</strong>
+          </article>
+          <article class="metric-card soon-card">
+            <span>Expiring soon</span>
+            <strong id="soonCount">0</strong>
+          </article>
+          <article class="metric-card expired-card">
+            <span>Expired</span>
+            <strong id="expiredCount">0</strong>
+          </article>
+          <article class="metric-card sales-card">
+            <span>Sales value</span>
+            <strong id="salesValue">0</strong>
+          </article>
+        </div>
+
+        <div class="dashboard-grid">
+          <section class="panel">
+            <div class="panel-head">
+              <h3>Critical Stock</h3>
+              <button class="text-btn" data-view-jump="medicineView">Manage</button>
+            </div>
+            <div id="criticalStockList" class="list-stack"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-head">
+              <h3>Recent Sales</h3>
+              <button class="text-btn" data-view-jump="reportsView">Open</button>
+            </div>
+            <div id="recentSalesList" class="list-stack"></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="medicineView" class="view">
+        <div class="two-column">
+          <section class="panel">
+            <div class="panel-head">
+              <h3 id="medicineFormTitle">Medicine Entry</h3>
+              <button id="resetMedicineForm" class="ghost-btn" type="button">Clear</button>
+            </div>
+            <div class="segment-control" role="tablist" aria-label="Medicine entry mode">
+              <button id="manualModeBtn" class="segment-btn active-segment" type="button" data-medicine-mode="manual">Manual</button>
+              <button id="billModeBtn" class="segment-btn" type="button" data-medicine-mode="bill">From bill</button>
+            </div>
+            <section id="billModePanel" class="import-card" aria-labelledby="billImportTitle" hidden>
+              <div class="panel-head wrap-head">
+                <h4 id="billImportTitle">Import Wholesaler Bill</h4>
+                <span id="billApiStatus" class="pill neutral-pill">Checking server</span>
+              </div>
+              <form id="billScanForm" class="data-form compact-form" enctype="multipart/form-data">
+                <label>
+                  Bill file
+                  <input id="billFile" type="file" accept=".pdf,image/*" required>
+                </label>
+                <p class="helper-text">Upload a PDF or photo of the wholesaler bill to extract medicines automatically.</p>
+                <p id="billScanMessage" class="form-message" role="status"></p>
+                <div class="filter-row">
+                  <button id="billScanBtn" class="primary-btn" type="submit">Scan bill</button>
+                  <button id="clearImportedBtn" class="ghost-btn" type="button">Clear preview</button>
+                </div>
+              </form>
+              <div id="billScanSummary" class="import-summary empty-state">No bill scanned yet.</div>
+              <div class="table-wrap compact-table">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Medicine</th>
+                      <th>Batch</th>
+                      <th>MFG</th>
+                      <th>EXP</th>
+                      <th>Pack</th>
+                      <th>Qty</th>
+                      <th>Units</th>
+                      <th>MRP</th>
+                      <th>Sale rate</th>
+                      <th>GST</th>
+                    </tr>
+                  </thead>
+                  <tbody id="billPreviewBody">
+                    <tr>
+                      <td colspan="10"><div class="empty-state">Preview rows will appear here after scanning.</div></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <button id="importScannedBtn" class="primary-btn full-width" type="button" disabled>Import scanned medicines</button>
+            </section>
+            <form id="medicineForm" class="data-form">
+              <input id="medicineId" type="hidden">
+              <label>
+                Medicine name
+                <input id="medicineName" required>
+              </label>
+              <div class="form-row">
+                <label>
+                  Batch number
+                  <input id="batchNumber" required>
+                </label>
+                <label>
+                  Barcode
+                  <input id="barcode" required>
+                </label>
+              </div>
+              <div class="form-row">
+                <label>
+                  Manufacture date
+                  <input id="manufactureDate" type="date">
+                </label>
+                <label>
+                  Expiry date
+                  <input id="expiryDate" type="date" required>
+                </label>
+              </div>
+              <div class="form-row thirds">
+                <label>
+                  Quantity
+                  <input id="quantity" type="number" min="0" step="1" required>
+                </label>
+                <label>
+                  MRP
+                  <input id="mrp" type="number" min="0" step="0.01" required>
+                </label>
+                <label>
+                  Sale rate
+                  <input id="saleRate" type="number" min="0" step="0.01" required>
+                </label>
+                <label>
+                  GST %
+                  <input id="gstPercent" type="number" min="0" step="0.01" value="0">
+                </label>
+                <label>
+                  Form
+                  <select id="form">
+                    <option>Tablet</option>
+                    <option>Capsule</option>
+                    <option>Syrup</option>
+                    <option>Injection</option>
+                    <option>Ointment</option>
+                    <option>Drops</option>
+                  </select>
+                </label>
+              </div>
+              <div class="form-row">
+                <label>
+                  Dosage
+                  <input id="dosage" placeholder="500 mg">
+                </label>
+                <label>
+                  Manufacturer
+                  <input id="manufacturer">
+                </label>
+              </div>
+              <div class="form-row">
+                <label>
+                  Supplier name
+                  <input id="supplierName">
+                </label>
+                <label>
+                  Supplier contact
+                  <input id="supplierContact">
+                </label>
+              </div>
+              <p id="medicineFormMessage" class="form-message" role="status"></p>
+              <button class="primary-btn" type="submit">Save medicine</button>
+            </form>
+          </section>
+
+          <section class="panel wide-panel">
+            <div class="panel-head wrap-head">
+              <h3>Inventory Management</h3>
+              <div class="filter-row">
+                <select id="statusFilter" aria-label="Filter by expiry status">
+                  <option value="all">All status</option>
+                  <option value="safe">Safe</option>
+                  <option value="soon">Expiring soon</option>
+                  <option value="expired">Expired</option>
+                  <option value="low">Low stock</option>
+                </select>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Medicine</th>
+                    <th>Batch</th>
+                    <th>Barcode</th>
+                    <th>Expiry</th>
+                    <th>Qty</th>
+                    <th>MRP</th>
+                    <th>Sale rate</th>
+                    <th>GST</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="medicineTableBody"></tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section id="billingView" class="view">
+        <div class="billing-grid">
+          <section class="panel">
+            <div class="panel-head">
+              <h3>Billing Form</h3>
+              <span class="pill" id="saleDatePill"></span>
+            </div>
+            <form id="scanForm" class="data-form compact-form">
+              <label>
+                Barcode scan
+                <input id="scanBarcode" placeholder="Scan or type barcode" autocomplete="off" required>
+              </label>
+              <label>
+                Quantity sold
+                <input id="scanQuantity" type="number" min="1" step="1" value="1" required>
+              </label>
+              <label>
+                Discount on MRP %
+                <input id="discountPercent" type="number" min="0" max="100" step="0.01" value="0">
+              </label>
+              <p id="scanMessage" class="form-message" role="status"></p>
+              <button class="primary-btn" type="submit">Add to bill</button>
+            </form>
+            <div id="barcodeLookup" class="lookup-panel"></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head">
+              <h3>Current Bill</h3>
+              <button id="clearCartBtn" class="ghost-btn" type="button">Clear</button>
+            </div>
+            <div class="table-wrap compact-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Item</th>
+                    <th>Qty</th>
+                    <th>MRP</th>
+                    <th>Discount</th>
+                    <th>GST</th>
+                    <th>Total</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="cartTableBody"></tbody>
+              </table>
+            </div>
+            <div id="billSummary" class="bill-summary"></div>
+            <div class="bill-total">
+              <span>Total amount</span>
+              <strong id="cartTotal">0</strong>
+            </div>
+            <button id="completeSaleBtn" class="primary-btn full-width" type="button">Generate bill</button>
+          </section>
+
+          <section class="panel receipt-panel">
+            <div class="panel-head">
+              <h3>Receipt</h3>
+              <button id="printCurrentReceiptBtn" class="ghost-btn" type="button">Print</button>
+            </div>
+            <div id="receiptOutput" class="receipt"></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="alertsView" class="view">
+        <section class="panel">
+          <div class="panel-head wrap-head">
+            <h3>Expiry Alert Screen</h3>
+            <button id="refreshAlertsBtn" class="ghost-btn" type="button">Refresh alerts</button>
+          </div>
+          <div id="alertsList" class="alert-grid"></div>
+        </section>
+      </section>
+
+      <section id="reportsView" class="view">
+        <section class="panel">
+          <div class="panel-head wrap-head">
+            <h3>Reports Form</h3>
+            <div class="filter-row">
+              <button id="inventoryReportBtn" class="ghost-btn active-filter" type="button">Inventory</button>
+              <button id="salesReportBtn" class="ghost-btn" type="button">Sales</button>
+              <button id="expiryReportBtn" class="ghost-btn" type="button">Expiry</button>
+              <button id="exportReportBtn" class="primary-btn" type="button">Export CSV</button>
+            </div>
+          </div>
+          <div id="reportSummary" class="report-summary"></div>
+          <div class="table-wrap">
+            <table>
+              <thead id="reportHead"></thead>
+              <tbody id="reportBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <section id="accountView" class="view">
+        <div class="two-column account-layout">
+          <section class="panel">
+            <div class="panel-head">
+              <h3>Account details</h3>
+            </div>
+            <div class="list-stack">
+              <div class="list-row">
+                <div>
+                  <strong>Name</strong>
+                  <small id="accountName">-</small>
+                </div>
+              </div>
+              <div class="list-row">
+                <div>
+                  <strong>Username</strong>
+                  <small id="accountUsername">-</small>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head">
+              <h3>Change password</h3>
+            </div>
+            <form id="changePasswordForm" class="data-form compact-form">
+              <label>
+                Old password
+                <div class="password-field">
+                  <input id="oldPassword" type="password" autocomplete="current-password" required>
+                  <button class="password-toggle" type="button" data-password-toggle="oldPassword" aria-label="Show password" aria-pressed="false">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M1.5 12s3.8-6.5 10.5-6.5S22.5 12 22.5 12s-3.8 6.5-10.5 6.5S1.5 12 1.5 12Z" />
+                      <circle cx="12" cy="12" r="3.5" />
+                    </svg>
+                  </button>
+                </div>
+              </label>
+              <label>
+                New password
+                <div class="password-field">
+                  <input id="newPassword" type="password" autocomplete="new-password" required>
+                  <button class="password-toggle" type="button" data-password-toggle="newPassword" aria-label="Show password" aria-pressed="false">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M1.5 12s3.8-6.5 10.5-6.5S22.5 12 22.5 12s-3.8 6.5-10.5 6.5S1.5 12 1.5 12Z" />
+                      <circle cx="12" cy="12" r="3.5" />
+                    </svg>
+                  </button>
+                </div>
+              </label>
+              <label>
+                Confirm new password
+                <div class="password-field">
+                  <input id="confirmNewPassword" type="password" autocomplete="new-password" required>
+                  <button class="password-toggle" type="button" data-password-toggle="confirmNewPassword" aria-label="Show password" aria-pressed="false">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M1.5 12s3.8-6.5 10.5-6.5S22.5 12 22.5 12s-3.8 6.5-10.5 6.5S1.5 12 1.5 12Z" />
+                      <circle cx="12" cy="12" r="3.5" />
+                    </svg>
+                  </button>
+                </div>
+              </label>
+              <p class="helper-text">New password must include a special character and cannot match the last password.</p>
+              <p id="changePasswordMessage" class="form-message" role="status"></p>
+              <button class="primary-btn" type="submit">Update password</button>
+            </form>
+          </section>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div id="logoutModal" class="modal-shell" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="logoutModalTitle">
+      <h3 id="logoutModalTitle">Log out</h3>
+      <p>Do you want to log out of this account?</p>
+      <div class="modal-actions">
+        <button id="cancelLogoutBtn" class="ghost-btn" type="button">Cancel</button>
+        <button id="confirmLogoutBtn" class="primary-btn" type="button">Log out</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

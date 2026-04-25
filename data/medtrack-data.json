@@ -1,0 +1,87 @@
+{
+  "users": [
+    {
+      "id": "user_1",
+      "name": "Pharmacy Admin",
+      "username": "admin",
+      "mobile": "9876543210",
+      "passwordHash": "440fe715e13625b7d12a9fa072f48413b5e20cb688608fd095f8a5ce2c738ce73ef999cf1534d94551ea7b3bd8cb6fd6ec5cef0950d3b8f101c55ea89ff81d9f",
+      "passwordSalt": "100c9d9cf86b7e1664df247cc11bd3fa",
+      "previousPasswordHash": "",
+      "previousPasswordSalt": "",
+      "createdAt": "2026-04-25T17:30:53.399Z",
+      "resetOtp": {
+        "hash": "148c87243a0eac373fb8633a239716f0fe5de1ea13c0a8c6416c125ec9419a282f8763b2b6e957dabc55d65cb991414c5564f9d2f8a18d04b42fec76c5833e5e",
+        "salt": "b1804197be1635b17fcbbacb84304faf",
+        "expiresAt": 1777139086139,
+        "attemptsLeft": 5
+      }
+    },
+    {
+      "id": "user_1777138611254_19966f9a",
+      "name": "Harman",
+      "username": "harman",
+      "mobile": "8630823089",
+      "passwordHash": "cdae1d4e32b89e0f3c7b5bfd2115372543d1b1ad91722210af4b54e459f7d15a56594736b408fc4f319d489a7d9a6a3072d3cfd0f563cd6f4ab8892ecd19d9d3",
+      "passwordSalt": "e84b2dab2585e10b1c1878713ef67532",
+      "previousPasswordHash": "be0f488c20763069b074d91531c9edba6ddd436587527f79fc3fdc184a029ab0733547ff48c44880729cbd6e9349cefce6e4039e64aa5e725cc5d81891ea3c4d",
+      "previousPasswordSalt": "d84b68fb004b9b0d8b7369d286353906",
+      "createdAt": "2026-04-25T17:36:51.254Z"
+    }
+  ],
+  "medicines": [
+    {
+      "id": "med_1",
+      "name": "Paracetamol",
+      "batchNumber": "PCM-0426",
+      "manufactureDate": "2025-01-10",
+      "expiryDate": "2027-01-10",
+      "quantity": 120,
+      "barcode": "890100000001",
+      "mrp": 22,
+      "saleRate": 18.5,
+      "gstPercent": 12,
+      "dosage": "500 mg",
+      "form": "Tablet",
+      "manufacturer": "CareWell Pharma",
+      "supplierName": "Metro Medical Supply",
+      "supplierContact": "9876543210"
+    },
+    {
+      "id": "med_2",
+      "name": "Cough Relief",
+      "batchNumber": "CRS-111",
+      "manufactureDate": "2024-08-01",
+      "expiryDate": "2026-05-05",
+      "quantity": 18,
+      "barcode": "890100000002",
+      "mrp": 98,
+      "saleRate": 86,
+      "gstPercent": 12,
+      "dosage": "100 ml",
+      "form": "Syrup",
+      "manufacturer": "Northline Labs",
+      "supplierName": "Unity Distributors",
+      "supplierContact": "9845011223"
+    },
+    {
+      "id": "med_3",
+      "name": "Amoxycin",
+      "batchNumber": "AMX-900",
+      "manufactureDate": "2024-03-12",
+      "expiryDate": "2026-04-12",
+      "quantity": 7,
+      "barcode": "890100000003",
+      "mrp": 48,
+      "saleRate": 42,
+      "gstPercent": 5,
+      "dosage": "250 mg",
+      "form": "Capsule",
+      "manufacturer": "Shield Biotech",
+      "supplierName": "Prime Health Traders",
+      "supplierContact": "9811122233"
+    }
+  ],
+  "sales": [],
+  "lastReceipt": ""
+}
