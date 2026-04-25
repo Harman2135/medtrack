@@ -335,25 +335,29 @@ function getItemPricing(item) {
   const quantity = Number(item.quantity || 0);
   const discountPercent = clampDiscount(item.discountPercent);
   const mrp = Number(item.mrp || 0);
-  const saleValueUnit = roundMoney(mrp * (1 - discountPercent / 100));
-  const gstUnit = roundMoney(saleValueUnit * (Number(item.gstPercent || 0) / 100));
-  const finalUnit = roundMoney(saleValueUnit + gstUnit);
-  const saleValueTotal = roundMoney(saleValueUnit * quantity);
+  const saleRate = Number(item.saleRate || 0);
+  const gstPercent = Number(item.gstPercent || 0);
+  const sellingPriceUnit = roundMoney(mrp * (1 - discountPercent / 100));
+  const gstUnit = roundMoney(saleRate * (gstPercent / 100));
+  const shopkeeperUnit = roundMoney(saleRate + gstUnit);
+  const sellingPriceTotal = roundMoney(sellingPriceUnit * quantity);
   const gstTotal = roundMoney(gstUnit * quantity);
-  const total = roundMoney(finalUnit * quantity);
+  const shopkeeperTotal = roundMoney(shopkeeperUnit * quantity);
   const mrpTotal = roundMoney(mrp * quantity);
-  const discountTotal = roundMoney((mrp - saleValueUnit) * quantity);
+  const discountTotal = roundMoney((mrp - sellingPriceUnit) * quantity);
 
   return {
     mrpUnit: mrp,
-    saleValueUnit,
+    saleRateUnit: saleRate,
+    sellingPriceUnit,
     gstUnit,
-    finalUnit,
+    shopkeeperUnit,
     mrpTotal,
     discountTotal,
-    saleValueTotal,
+    sellingPriceTotal,
     gstTotal,
-    total,
+    shopkeeperTotal,
+    total: sellingPriceTotal,
   };
 }
 
@@ -363,16 +367,18 @@ function cartBreakdown() {
       const pricing = getItemPricing(item);
       summary.mrpTotal += pricing.mrpTotal;
       summary.discountTotal += pricing.discountTotal;
-      summary.saleValueTotal += pricing.saleValueTotal;
+      summary.sellingPriceTotal += pricing.sellingPriceTotal;
       summary.gstTotal += pricing.gstTotal;
+      summary.shopkeeperTotal += pricing.shopkeeperTotal;
       summary.finalTotal += pricing.total;
       return summary;
     },
     {
       mrpTotal: 0,
       discountTotal: 0,
-      saleValueTotal: 0,
+      sellingPriceTotal: 0,
       gstTotal: 0,
+      shopkeeperTotal: 0,
       finalTotal: 0,
     },
   );
@@ -814,7 +820,7 @@ function renderCart() {
               <td>${item.quantity}</td>
               <td>${formatMoney(item.mrp)}</td>
               <td>${item.discountPercent}%</td>
-              <td>${formatMoney(pricing.gstTotal)}</td>
+              <td>${formatMoney(pricing.shopkeeperTotal)}</td>
               <td>${formatMoney(pricing.total)}</td>
               <td><button class="mini-btn danger" type="button" data-cart-remove="${item.id}">Remove</button></td>
             </tr>
@@ -828,8 +834,8 @@ function renderCart() {
     ? `
       <div><span>MRP total</span><strong>${formatMoney(summary.mrpTotal)}</strong></div>
       <div><span>Discount</span><strong>${formatMoney(summary.discountTotal)}</strong></div>
-      <div><span>Sale value</span><strong>${formatMoney(summary.saleValueTotal)}</strong></div>
-      <div><span>GST added</span><strong>${formatMoney(summary.gstTotal)}</strong></div>
+      <div><span>Customer pays</span><strong>${formatMoney(summary.sellingPriceTotal)}</strong></div>
+      <div><span>Shopkeeper gets (sale + GST)</span><strong>${formatMoney(summary.shopkeeperTotal)}</strong></div>
     `
     : "";
   els.cartTotal.textContent = formatMoney(summary.finalTotal);
@@ -1182,9 +1188,10 @@ function buildReceipt(sale) {
     line,
     `MRP total: ${formatReceiptMoney(summary.mrpTotal)}`,
     `Discount: ${formatReceiptMoney(summary.discountTotal)}`,
-    `Sale value: ${formatReceiptMoney(summary.saleValueTotal)}`,
-    `GST: ${formatReceiptMoney(summary.gstTotal)}`,
-    `Total: ${formatReceiptMoney(sale.totalAmount)}`,
+    `Customer pays: ${formatReceiptMoney(summary.sellingPriceTotal)}`,
+    `Shop gets: ${formatReceiptMoney(summary.shopkeeperTotal)}`,
+    `GST in shop amount: ${formatReceiptMoney(summary.gstTotal)}`,
+    `Bill total: ${formatReceiptMoney(sale.totalAmount)}`,
     "Thank you",
   ].join("\n");
 }
