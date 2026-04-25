@@ -73,7 +73,7 @@ Why Render for this app:
 
 - it supports Node web services directly
 - it gives you a public HTTPS URL
-- it supports a persistent disk, which this app needs because user accounts and inventory are stored in `data/medtrack-data.json`
+- it can also be deployed on the free plan for demo use
 
 ### Deploy on Render
 
@@ -88,9 +88,18 @@ Why Render for this app:
 8. When deploy finishes, Render gives you a public URL like:
    - `https://medtrack.onrender.com`
 
-### Important production note
+### Important free-plan note
 
-This Render setup uses a `starter` plan because Render persistent disks are for paid web services. Without a persistent disk, your users, medicines, and sales data would be lost on redeploy or restart.
+This repository is currently configured for Render `free` plan deployment.
+
+That means the app can be public, but server-side data may be lost when Render restarts or redeploys the service. This affects:
+
+- user accounts
+- medicines
+- sales
+- receipts
+
+For a real production deployment, the next step is moving storage to a proper database or switching to a paid plan with persistent storage.
 
 ### After deploy
 
