@@ -337,9 +337,10 @@ function getItemPricing(item) {
   const mrp = Number(item.mrp || 0);
   const saleRate = Number(item.saleRate || 0);
   const gstPercent = Number(item.gstPercent || 0);
-  const sellingPriceUnit = roundMoney(mrp * (1 - discountPercent / 100));
   const gstUnit = roundMoney(saleRate * (gstPercent / 100));
   const shopkeeperUnit = roundMoney(saleRate + gstUnit);
+  const discountedMrpUnit = roundMoney(mrp * (1 - discountPercent / 100));
+  const sellingPriceUnit = Math.max(discountedMrpUnit, shopkeeperUnit);
   const sellingPriceTotal = roundMoney(sellingPriceUnit * quantity);
   const gstTotal = roundMoney(gstUnit * quantity);
   const shopkeeperTotal = roundMoney(shopkeeperUnit * quantity);
@@ -349,6 +350,7 @@ function getItemPricing(item) {
   return {
     mrpUnit: mrp,
     saleRateUnit: saleRate,
+    requestedDiscountPercent: discountPercent,
     sellingPriceUnit,
     gstUnit,
     shopkeeperUnit,
@@ -359,6 +361,16 @@ function getItemPricing(item) {
     shopkeeperTotal,
     total: sellingPriceTotal,
   };
+}
+
+function maxAllowedDiscountPercent(medicine) {
+  const mrp = Number(medicine?.mrp || 0);
+  const saleRate = Number(medicine?.saleRate || 0);
+  const gstPercent = Number(medicine?.gstPercent || 0);
+  if (mrp <= 0) return 0;
+  const shopkeeperUnit = roundMoney(saleRate + roundMoney(saleRate * (gstPercent / 100)));
+  const maxDiscount = ((mrp - shopkeeperUnit) / mrp) * 100;
+  return Math.max(0, roundMoney(maxDiscount));
 }
 
 function cartBreakdown() {
@@ -1081,7 +1093,7 @@ function updateBarcodeLookup() {
   els.barcodeLookup.innerHTML = `
     <strong>${escapeHtml(medicine.name)}</strong>
     <p>${escapeHtml(medicine.batchNumber)} | MRP ${formatMoney(medicine.mrp)} | Sale ${formatMoney(medicine.saleRate)} | GST ${medicine.gstPercent}%</p>
-    <p>Stock ${Number(medicine.quantity)}</p>
+    <p>Stock ${Number(medicine.quantity)} | Max discount ${maxAllowedDiscountPercent(medicine).toFixed(2)}%</p>
     <span class="status ${expiry.key}">${expiry.label}</span>
   `;
 }
@@ -1097,6 +1109,10 @@ function addToCart(barcode, quantity, discountPercent) {
   if (expiry.key === "expired") return "Expired medicine cannot be sold.";
   if (quantity <= 0) return "Quantity sold must be at least 1.";
   if (discountPercent < 0 || discountPercent > 100) return "Discount must be between 0% and 100%.";
+  const maxDiscount = maxAllowedDiscountPercent(medicine);
+  if (discountPercent > maxDiscount) {
+    return `Maximum allowed discount for this item is ${maxDiscount.toFixed(2)}% to avoid loss.`;
+  }
   const existing = currentCart.find((item) => item.id === medicine.id);
   const alreadyInCart = existing ? existing.quantity : 0;
   if (alreadyInCart + quantity > Number(medicine.quantity)) {
