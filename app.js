@@ -1204,9 +1204,6 @@ function buildReceipt(sale) {
     line,
     `MRP total: ${formatReceiptMoney(summary.mrpTotal)}`,
     `Discount: ${formatReceiptMoney(summary.discountTotal)}`,
-    `Customer pays: ${formatReceiptMoney(summary.sellingPriceTotal)}`,
-    `Shop gets: ${formatReceiptMoney(summary.shopkeeperTotal)}`,
-    `GST in shop amount: ${formatReceiptMoney(summary.gstTotal)}`,
     `Bill total: ${formatReceiptMoney(sale.totalAmount)}`,
     "Thank you",
   ].join("\n");
